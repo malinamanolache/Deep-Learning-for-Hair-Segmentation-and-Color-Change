@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1604</width>
+    <height>867</height>
+   </rect>
+  </property>
+  <property name="cursor">
+   <cursorShape>ArrowCursor</cursorShape>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="image_container">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>140</y>
+      <width>531</width>
+      <height>621</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Image</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mask_container">
+    <property name="geometry">
+     <rect>
+      <x>1340</x>
+      <y>140</y>
+      <width>531</width>
+      <height>621</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Mask</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_browse_image">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>40</y>
+      <width>191</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Browse an image</string>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>490</y>
+      <width>541</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Blending method</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>40</y>
+       <width>351</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_R">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>R:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="red_value">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_G">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>G:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="green_value">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+           </font>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_B">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>B:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QTextEdit" name="blue_vaue"/>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="alpha_value">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>alpha:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="alpha_slider">
+          <property name="maximum">
+           <number>100</number>
+          </property>
+          <property name="singleStep">
+           <number>5</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>80</y>
+       <width>55</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>13</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>0%</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="blending_checkbox">
+     <property name="geometry">
+      <rect>
+       <x>500</x>
+       <y>20</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>260</y>
+      <width>581</width>
+      <height>221</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>HSV method</string>
+    </property>
+    <widget class="QCheckBox" name="hsv_checkbox">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>20</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>50</y>
+       <width>501</width>
+       <height>141</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="hue_label">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Hue</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="hue_slider">
+          <property name="maximum">
+           <number>180</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="hue_value">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="saturation_label">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Saturation</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="saturation_slider">
+          <property name="minimum">
+           <number>-150</number>
+          </property>
+          <property name="maximum">
+           <number>150</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="saturation_value">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <widget class="QLabel" name="value_label">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>Value</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSlider" name="value_slider">
+          <property name="minimum">
+           <number>-150</number>
+          </property>
+          <property name="maximum">
+           <number>150</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="value_value">
+          <property name="font">
+           <font>
+            <pointsize>13</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="font">
+         <font>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Show Histogram</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_3">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>650</y>
+      <width>441</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Edge fading</string>
+    </property>
+    <widget class="QSplitter" name="splitter">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>40</y>
+       <width>401</width>
+       <height>27</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <widget class="QLabel" name="label">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Kernel size</string>
+      </property>
+     </widget>
+     <widget class="QSlider" name="kernel_slider">
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>51</number>
+      </property>
+      <property name="singleStep">
+       <number>2</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <pointsize>13</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>0 x 0</string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_4">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>70</y>
+      <width>311</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Choose a model</string>
+    </property>
+    <widget class="QComboBox" name="comboBox">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>271</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+     <property name="currentText">
+      <string>U-Net</string>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <item>
+      <property name="text">
+       <string>U-Net</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>U-Net dropout</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>U-Net data augmentation</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>U-Net pretrained VGG</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QPushButton" name="inference_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>90</y>
+       <width>141</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Predict</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_5">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>650</y>
+      <width>261</width>
+      <height>101</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="title">
+     <string>Contrast Enhancement</string>
+    </property>
+    <widget class="QPushButton" name="hist_eq_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>231</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Apply Histogram Equalization</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="clahe_button">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>60</y>
+       <width>231</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string>Apply CLAHE</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPushButton" name="save_img_button">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>760</y>
+      <width>131</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Save image</string>
+    </property>
+   </widget>
+   <zorder>groupBox_4</zorder>
+   <zorder>groupBox_3</zorder>
+   <zorder>image_container</zorder>
+   <zorder>mask_container</zorder>
+   <zorder>pushButton_browse_image</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>groupBox_2</zorder>
+   <zorder>groupBox_5</zorder>
+   <zorder>save_img_button</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1604</width>
+     <height>26</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
