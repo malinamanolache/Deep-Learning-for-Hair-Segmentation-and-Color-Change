@@ -101,8 +101,8 @@ def crop_images(image, bb_list):
 
 def infer_yolo(original_image):
    
-    weights = "C:\\Users\\Maly\\Desktop\\PyTorch_YOLOv4\\runs\\train\\exp3\\weights\\best.pt"
-    cfg = "C:\\Users\\Maly\\Desktop\\PyTorch_YOLOv4\\cfg\\yolov4.cfg"
+    weights = "/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/final_models_licenta/best.pt"
+    cfg = "/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/train_yolov4/cfg/yolov4.cfg"
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
     
     model = Darknet(cfg, 512).cuda()
@@ -120,34 +120,34 @@ def infer_yolo(original_image):
     img /= 255.0  # 0 - 255 to 0.0 - 1.0
     if img.ndimension() == 3:
         img = img.unsqueeze(0)
+    with torch.no_grad():
+        pred = model(img, augment=False)[0]
 
-    pred = model(img, augment=False)[0]
+        pred = non_max_suppression(pred,0.001, 0.7, classes=[0], agnostic=False)
+        # print(pred)
+        bb_list = []
+        for i, det in enumerate(pred):
+            gn = torch.tensor(original_image.shape)[[1, 0, 1, 0]]
 
-    pred = non_max_suppression(pred,0.001, 0.7, classes=[0], agnostic=False)
-    # print(pred)
-    bb_list = []
-    for i, det in enumerate(pred):
-        gn = torch.tensor(original_image.shape)[[1, 0, 1, 0]]
+            if det is not None and len(det):
+                # Rescale boxes from img_size to im0 size
 
-        if det is not None and len(det):
-            # Rescale boxes from img_size to im0 size
+                det[:, :4] = scale_coords(img.shape[2:], det[:, :4], original_image.shape).round()
+                s=''
+                # Print results
+                for c in det[:, -1].unique():
+                    n = (det[:, -1] == c).sum()  # detections per class
+                    s += '%g %ss, ' % (n, "hair")  # add to string
 
-            det[:, :4] = scale_coords(img.shape[2:], det[:, :4], original_image.shape).round()
-            s=''
-            # Print results
-            for c in det[:, -1].unique():
-                n = (det[:, -1] == c).sum()  # detections per class
-                s += '%g %ss, ' % (n, "hair")  # add to string
+                # Write results
+                for *xyxy, conf, cls in det:
+                    
+                    xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
+                    bb_list.append(xywh)
 
-            # Write results
-            for *xyxy, conf, cls in det:
-                
-                xywh = (xyxy2xywh(torch.tensor(xyxy).view(1, 4)) / gn).view(-1).tolist()  # normalized xywh
-                bb_list.append(xywh)
-
-                label = 'hair %.2f' % (conf)
-                orig = original_image.copy()
-                plot_one_box(xyxy, orig, label=None, color=[255,0,0], line_thickness=3)
+                    label = 'hair %.2f' % (conf)
+                    orig = original_image.copy()
+                    plot_one_box(xyxy, orig, label=None, color=[255,0,0], line_thickness=3)
 
     cropped_img = crop_images(original_image, bb_list)
 

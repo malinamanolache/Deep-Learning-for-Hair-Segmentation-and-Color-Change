@@ -10,11 +10,13 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from pyqtgraph import PlotWidget
-import numpy as np
-import cv2
+
 from histogram_plot_ui import Ui_HistogramWindow
 from PyQt5.QtCore import *
 from inference import predict
+from PIL import Image
+import numpy as np
+import cv2
 
 
 class Ui_MainWindow(object):
@@ -245,6 +247,9 @@ class Ui_MainWindow(object):
         self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
+        self.comboBox.addItem("")
         self.inference_button = QtWidgets.QPushButton(self.groupBox_4)
         self.inference_button.setGeometry(QtCore.QRect(10, 90, 141, 61))
         font = QtGui.QFont()
@@ -436,12 +441,12 @@ class Ui_MainWindow(object):
 
             if kernel_size != 1:
                 blurred_mask = cv2.GaussianBlur(self.mask,(kernel_size,kernel_size),0)
-                colored_hair = eq_img.astype(float)
+                colored_hair = clahe_img.astype(float)
                 original_image = self.image.astype(float)
                 blurred_mask = blurred_mask.astype(float)/255
                 blended = blurred_mask*colored_hair + (1-blurred_mask)*original_image
                 blended = blended.astype("uint8")
-                eq_img = blended
+                clahe_img = blended
 
             clahe_img = self.resize_image_to_fit(clahe_img, self.image_container)
             height, width, channel = clahe_img.shape
@@ -456,6 +461,7 @@ class Ui_MainWindow(object):
     def select_and_display(self):
         file_dialog = QtWidgets.QFileDialog()
         file_path, _ = file_dialog.getOpenFileName(self, "Select Image", "", "Image Files (*.png *.jpg *.jpeg)")
+        # self.image = np.array(Image.open(file_path))
         self.image = cv2.imread(file_path)
         self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
         self.current_image = self.image
@@ -491,7 +497,7 @@ class Ui_MainWindow(object):
 
         if kernel_size != 1:
             blurred_mask = cv2.GaussianBlur(self.mask,(kernel_size,kernel_size),0)
-            colored_hair = blended.astype(float)
+            colored_hair = self.current_image.astype(float)
             original_image = self.image.astype(float)
             blurred_mask = blurred_mask.astype(float)/255
             blended = blurred_mask*colored_hair + (1-blurred_mask)*original_image
@@ -681,6 +687,8 @@ class Ui_MainWindow(object):
         self.comboBox.setItemText(1, _translate("MainWindow", "U-Net dropout"))
         self.comboBox.setItemText(2, _translate("MainWindow", "U-Net data augmentation"))
         self.comboBox.setItemText(3, _translate("MainWindow", "U-Net pretrained VGG"))
+        self.comboBox.setItemText(4, _translate("MainWindow", "U-Net with DenseNet encoder"))
+        self.comboBox.setItemText(5, _translate("MainWindow", "YOLOv4+U-Net"))
         self.inference_button.setText(_translate("MainWindow", "Predict"))
         self.groupBox_5.setTitle(_translate("MainWindow", "Contrast Enhancement"))
         self.hist_eq_button.setText(_translate("MainWindow", "Apply Histogram Equalization"))

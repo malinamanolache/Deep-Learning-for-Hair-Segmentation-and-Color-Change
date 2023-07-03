@@ -3,6 +3,7 @@ from networks.unet_aug import Unet_augmentation
 from networks.unet import Unet
 from networks.unet_dropout import Unet_dropout
 from networks.unet_vgg import Unet_VGG, VGG
+from networks.densenet import Densenet_Unet
 import torch
 import os
 from torchvision import transforms
@@ -21,27 +22,32 @@ def predict(image, model_name):
     if model_name == "U-Net":
         model = Unet()
         model.to(device)
-        model.load_state_dict(torch.load("D:\\MALY\\final_models_licenta\\unet_BCEloss_143.pth"))
+        model.load_state_dict(torch.load("/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/final_models_licenta/unet_BCEloss_143.pth"))
     elif model_name == "U-Net dropout":
         model = Unet_dropout()
         model.to(device)
-        model.load_state_dict(torch.load("D:\\MALY\\final_models_licenta\\UNET_dropout_191.pth"))
+        model.load_state_dict(torch.load("/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/final_models_licenta/UNET_dropout_191.pth"))
     elif model_name == "U-Net data augmentation":
         model = Unet_augmentation()
         model.to(device)
-        model.load_state_dict(torch.load("D:\\MALY\\final_models_licenta\\UNET_data_augmentation_441.pth"))
+        model.load_state_dict(torch.load("/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/final_models_licenta/UNET_data_augmentation_441.pth"))
     elif model_name == "U-Net pretrained VGG":
         vgg = VGG()
         model = Unet_VGG(vgg)
         model.to(device)
-        model.load_state_dict(torch.load("D:\\MALY\\final_models_licenta\\U-Net_pretrained_177.pth"))
-    elif model_name == "YOLOv4 + U-Net":
+        model.load_state_dict(torch.load("/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/final_models_licenta/U-Net_pretrained_177.pth"))
+    elif model_name == "U-Net with DenseNet encoder":
+        model = Densenet_Unet()
+        model.to(device)
+        model.load_state_dict(torch.load("/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/final_models_licenta/densenet_corect_156.pth"))
+    elif model_name == "YOLOv4+U-Net":
         # detect
         image, box_coordinates = infer_yolo(image)
         cropped_height, cropped_width,_ = image.shape
-        model = Unet_augmentation()
+        vgg = VGG()
+        model = Unet_VGG(vgg)
         model.to(device)
-        model.load_state_dict(torch.load("D:\\MALY\\final_models_licenta\\U-Net_cropped_209.pth"))
+        model.load_state_dict(torch.load("/home/intern2/Deep-Learning-for-Hair-Segmentation-and-Color-Change/final_models_licenta/U-Net_pretrained_177.pth"))
 
     model.eval()
     image = cv2.resize(image, (512, 512), interpolation=cv2.INTER_AREA)
@@ -56,14 +62,16 @@ def predict(image, model_name):
     image = normalize(image)
     image = image[None, :]
     image = image.to(device)
-    prediction = model(image)
-    prediction = prediction.cpu().detach().numpy()
-    prediction = np.squeeze(prediction, axis = 0)
+    with torch.no_grad():
+        prediction = model(image)
+        prediction = prediction.cpu().detach().numpy()
+        prediction = np.squeeze(prediction, axis = 0)
 
-    prediction = (prediction > 0.5).astype(np.uint8)
-    prediction = np.moveaxis(prediction, 0,-1)
-    prediction = prediction*255
-    if model_name == "YOLOv4 + U-Net":
+        prediction = (prediction > 0.5).astype(np.uint8)
+        prediction = np.moveaxis(prediction, 0,-1)
+        prediction = prediction*255
+    if model_name == "YOLOv4+U-Net":
+
         x, y, width_b, height_b = box_coordinates
         prediction = cv2.resize(prediction, (cropped_width, cropped_height), interpolation=cv2.INTER_AREA)       
         # Calculate the coordinates of the bounding box in the original image
@@ -91,9 +99,6 @@ def predict(image, model_name):
         prediction = final_mask
     else:
         prediction = cv2.resize(prediction, (width, height), interpolation=cv2.INTER_AREA)
-
-    print('Done')
-    print(prediction.shape)
 
     return prediction
 
